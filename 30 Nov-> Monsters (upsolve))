@@ -1,0 +1,71 @@
+STARTERS 110 CONTEST ON 29 NOVEMBER
+Ben is fighting a monster with a health of H. He starts with an attack power of 1
+Ben has two types of moves:
+He can use a regular attack, which damages the monster by his current attack power.
+After this, his attack power doubles.
+2ND He can use a special move: choose a prime number 
+P such that P≤H (
+H being the current health of the monster), and deal P damage to the monster.This move can be done at most once.
+Note that this special move doesn't affect his attack power: it doesn't double, and remains the same.
+To kill the monster, Ben must deal exactly H damage to it.
+Find the minimum number of moves needed for Ben to kill the monster, or prinT −1 if it's impossible to kill it no matter what.
+
+Input Format
+The first line of input will contain a single integer 
+T, denoting the number of test cases.
+Each of the next T lines contains one integer 
+H — the initial health of monster.
+Output Format
+For each test case, output on a new line the minimum number of moves Ben will perform to kill the monster (if he's able to do so at all).
+If he is unable to kill the monster no matter what, output −1 instead.
+
+
+CODE:
+#include <bits/stdc++.h>
+using namespace std;
+int solve(bool isprime[]){
+        int h;
+	    cin>>h;
+	    int ans=0;
+	    int curr=1;
+	    while(h>0){
+	        if(isprime[h]){
+	            ans++;
+	            cout<<ans<<endl;
+	            return 0;
+	        }
+	        else{
+	            h-=curr;
+	            curr*=2;
+	            ans++;
+	        }
+	    }
+	    if(h==0){
+	        cout<<ans<<endl;
+	        return 0;
+	    }
+	    if(h<0){
+	        cout<<-1<<endl;
+	        return 0;
+	    }
+}
+int main() {
+	// your code goes here
+	int t;
+	cin>>t;
+	bool isprime[1000001];
+	    int n=sizeof(isprime);
+	    memset(isprime,true,sizeof(isprime));
+	    for(int i=2;i*i<=n;i++){
+	        if(isprime[i]==true){
+	            for(int j=i*i;j<=n;j=j+i){
+	                isprime[j]=false;//multiples of 4
+	            }
+	        }
+	    }
+	while(t--){
+	    solve(isprime);
+	}
+	
+	return 0;
+}
